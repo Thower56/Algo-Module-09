@@ -6,15 +6,24 @@ template <class TypeElement>
 class ListeChainee
 {
 public:
-	ListeChainee();
+	ListeChainee() 
+	{
+		;
+	};
 
-	ListeChainee(const ListeChainee& p_listACopier);
+	/*ListeChainee(const ListeChainee& p_listACopier)
+	{
+		;
+	};*/
 
-	~ListeChainee();
+	~ListeChainee()
+	{
+		;
+	};
 
 	void ajouterDebut(TypeElement& p_valeur)
 	{
-		Node<TypeElement> nouvelleValeur = new Node<TypeElement>(p_valeur, nullptr);
+		Node<TypeElement>* nouvelleValeur = new Node<TypeElement>(p_valeur);
 		if (nombreElement == 0)
 		{
 			debut = nouvelleValeur;
@@ -22,7 +31,7 @@ public:
 		}
 		else 
 		{
-			nouvelleValeur->m_next = &debut;
+			nouvelleValeur->m_next = debut;
 			debut = nouvelleValeur;
 		}
 		this->nombreElement++;
@@ -30,7 +39,7 @@ public:
 
 	void ajouterFin(TypeElement& p_valeur) 
 	{
-		Node<TypeElement>* nouvelleValeur = new Node<TypeElement>(p_valeur, nullptr);
+		Node<TypeElement>* nouvelleValeur = new Node<TypeElement>(p_valeur);
 		fin->m_next = nouvelleValeur;
 	};
 
@@ -41,14 +50,14 @@ public:
 			std::invalid_argument("Indice trop eleve");
 		}
 
-		Node<TypeElement>* nouvelleValeur = new Node<TypeElement>(p_valeur, nullptr);
+		Node<TypeElement>* nouvelleValeur = new Node<TypeElement>(p_valeur);
 		if (p_indice == 0)
 		{
 			ajouterDebut(nouvelleValeur->m_valeur);
 		}
 		else 
 		{
-			Node<TypeElement> valeurPrecedente = inserer_rec(debut->m_next, --p_indice);
+			Node<TypeElement>* valeurPrecedente = parcourir_rec(debut->m_next, --&p_indice);
 			nouvelleValeur->m_next = valeurPrecedente.m_next;
 			valeurPrecedente->m_next = nouvelleValeur;
 		}
@@ -60,20 +69,38 @@ public:
 	{
 		if (this->nombreElement > 0)
 		{
-			Node<TypeElement>* temp = debut;
-			
+			delete debut;
+			debut = debut->m_next;
 		}
 	};
 
-	void supprimerFin();
+	void supprimerFin()
+	{
+		delete parcourir_rec(this->debut, this->nombreElement - 1);
+		parcourir_rec(this->debut, this->nombreElement - 1) = nullptr;
+	};
 
-	void supprimerA(const int& p_indice);
+	void supprimerA(const int& p_indice)
+	{
+		delete parcourir_rec(this->debut, p_indice);
+		parcourir_rec(this->debut, this->nombreElement - 1) = nullptr;
+	};
 
-	int capacite() const;
+	int capacite() const
+	{
+		return this->nombreElement;
+	};
 
-	ListeChainee<TypeElement>& operator=(const ListeChainee& p_listeACopier);
+	TypeElement operator[](const int& p_indice)
+	{
+		Node<TypeElement>* valeur;
+		valeur = parcourir_rec(debut->m_next, p_indice);
+		return valeur.m_valeur;
+	}
 
-	ListeChainee<TypeElement>& operator=(ListeChainee&& p_listeADeplacer);
+	/*ListeChainee<TypeElement>& operator=(const ListeChainee& p_listeACopier);
+
+	ListeChainee<TypeElement>& operator=(ListeChainee&& p_listeADeplacer);*/
 
 	void parcourir(void (*p_fonction)(const int&));
 
@@ -82,7 +109,7 @@ public:
 
 private:
 
-	Node inserer_rec(const Node<TypeElement>& p_node, const int& p_compteur)
+	Node<TypeElement>* parcourir_rec(Node<TypeElement>& p_node, int p_compteur)
 	{
 
 		if (p_compteur == 0)
@@ -91,7 +118,7 @@ private:
 		}
 		else
 		{
-			inserer_rec(p_node.m_next, --p_compteur);
+			parcourir_rec(p_node.m_next, --p_compteur);
 		}
 	};
 	Node<TypeElement>* debut;
