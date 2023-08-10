@@ -1,2 +1,7 @@
 ﻿  Module 09 - Liste Chainee.cpp
+C:\Session3\Algo\Algo-Module-09\Module 09 - Liste Chainee\ListeChainee.h(126,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Session3\Algo\Algo-Module-09\Module 09 - Liste Chainee\ListeChainee.h(123,1): message : while compiling class template member function 'ListeChainee<int> &ListeChainee<int>::operator =(const ListeChainee<int> &)'
+C:\Session3\Algo\Algo-Module-09\Module 09 - Liste Chainee\Module 09 - Liste Chainee.cpp(17,16): message : see reference to function template instantiation 'ListeChainee<int> &ListeChainee<int>::operator =(const ListeChainee<int> &)' being compiled
+C:\Session3\Algo\Algo-Module-09\Module 09 - Liste Chainee\Module 09 - Liste Chainee.cpp(6,23): message : see reference to class template instantiation 'ListeChainee<int>' being compiled
+C:\Session3\Algo\Algo-Module-09\Module 09 - Liste Chainee\ListeChainee.h(179): warning C4715: 'ListeChainee<int>::parcourir_rec': not all control paths return a value
   Module 09 - Liste Chainee.vcxproj -> C:\Session3\Algo\Algo-Module-09\x64\Debug\Module 09 - Liste Chainee.exe

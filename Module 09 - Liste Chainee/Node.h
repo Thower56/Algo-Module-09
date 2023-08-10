@@ -6,10 +6,10 @@ class Node
 public:
 	Node() { ; }
 
-	Node(TypeElement p_valeur, Node<TypeElement>& p_next)
+	Node(TypeElement p_valeur)
 	{
 		this->m_valeur = p_valeur;
-		this->m_next = p_next;
+		this->m_next = nullptr;
 	}
 
 	TypeElement m_valeur;
