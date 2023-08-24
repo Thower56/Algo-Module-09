@@ -97,14 +97,45 @@ public:
 
 	void supprimerFin()
 	{
-		delete parcourir_rec(this->debut, this->nombreElement - 1);
-		parcourir_rec(this->debut, this->nombreElement - 1) = nullptr;
+		if (this->nombreElement > 0)
+		{
+			if (this->nombreElement == 1)
+			{
+				delete debut;
+				debut = nullptr;
+				fin = nullptr;
+			}
+			else
+			{
+				Node<TypeElement>* avantDernier = parcourir_rec(this->debut, this->nombreElement - 2);
+				delete fin;
+				fin = avantDernier;
+				fin->m_next = nullptr;
+			}
+			this->nombreElement--;
+		}
 	};
 
 	void supprimerA(const int& p_indice)
 	{
-		delete parcourir_rec(this->debut, p_indice);
-		parcourir_rec(this->debut, this->nombreElement - 1) = nullptr;
+		if (p_indice < 0 || p_indice >= this->nombreElement)
+		{
+			throw std::out_of_range("Indice hors de la plage valide");
+		}
+
+		if (p_indice == 0)
+		{
+			supprimerDebut();
+			return;
+		}
+
+		Node<TypeElement>* valeurPrecedente = parcourir_rec(this->debut, p_indice - 1);
+		Node<TypeElement>* valeurASupprimer = valeurPrecedente->m_next;
+
+		valeurPrecedente->m_next = valeurASupprimer->m_next;
+		delete valeurASupprimer;
+
+		this->nombreElement--;
 	};
 
 	int capacite() const
